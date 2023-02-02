@@ -51,6 +51,11 @@ view: order_items {
     sql: ${status} != "Cancelled" AND ${returned_date} IS NULL ;;
   }
 
+  dimension: isreturned {
+    type: yesno
+    sql: ${returned_date} IS NOT NULL ;;
+  }
+
   dimension: order_id {
     type: number
     sql: ${TABLE}.order_id ;;
@@ -108,6 +113,13 @@ view: order_items {
 
   # --measures--##
 
+  measure: average_gross_margin_amount {
+    type: average
+    filters: [iscomplete: "yes"]
+    sql: ${order_items.sale_price}-${products.cost} ;;
+    value_format_name: usd
+  }
+
   measure: average_sale_price {
     description: "Average sale price of items sold"
     type: average
@@ -115,6 +127,15 @@ view: order_items {
     value_format_name: usd
   }
 
+  measure: num_complete_sales {
+    type: count
+    filters: [iscomplete: "yes"]
+  }
+
+  measure: num_returned_items {
+    type: count
+    filters: [isreturned: "yes"]
+  }
   measure: cumulative_total_sales {
     description: "Cumulative total sales from items sold (also known as a running total)"
     type: running_total
@@ -124,7 +145,7 @@ view: order_items {
 
   measure: total_gross_margin_amount {
     type: sum
-    filters: [order_items.iscomplete: "yes"]
+    filters: [iscomplete: "yes"]
     sql: ${order_items.sale_price}-${products.cost} ;;
     value_format_name: usd
   }

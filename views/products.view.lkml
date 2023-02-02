@@ -69,6 +69,7 @@ view: products {
     sql: ${cost} ;;
     value_format_name: usd
   }
+
   set: detail {
     fields: [
       id,
