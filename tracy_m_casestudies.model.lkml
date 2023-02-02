@@ -8,8 +8,13 @@ explore: order_items {
     sql_on: ${order_items.product_id} = ${products.id} ;;
     relationship: many_to_one
     }
+  # join: products_crossview {
+  #   relationship: one_to_one
+  # sql:  ;;
+  # }
 }
 explore: users {}
+
 explore: products {
   join: order_items {
     type: inner
@@ -17,14 +22,3 @@ explore: products {
     relationship: one_to_many
     }
 }
-
-#   join: orders {
-#     relationship: many_to_one
-#     sql_on: ${orders.id} = ${order_items.order_id} ;;
-#   }
-#
-#   join: users {
-#     relationship: many_to_one
-#     sql_on: ${users.id} = ${orders.user_id} ;;
-#   }
-# }
