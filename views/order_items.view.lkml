@@ -48,7 +48,7 @@ view: order_items {
 
   dimension: iscomplete {
     type: yesno
-    sql: ${status} = "-Cancelled" AND ${returned_date} ="-NULL" ;;
+    sql: ${status} != "Cancelled" AND ${returned_date} IS NULL ;;
   }
 
   dimension: order_id {

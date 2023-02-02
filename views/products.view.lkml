@@ -52,13 +52,19 @@ view: products {
   }
 
   ##--measures--##
+  measure: average_cost {
+    type: average
+    sql: ${cost} ;;
+  }
+
   measure: total_cost {
     type: sum
     sql: ${cost} ;;
   }
 
-  measure: average_cost {
-    type: average
+  measure: total_cost_completed {
+    type: sum
+    filters: [order_items.iscomplete: "yes"]
     sql: ${cost} ;;
   }
 
