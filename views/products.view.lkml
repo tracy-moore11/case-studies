@@ -63,12 +63,12 @@ view: products {
     value_format_name: usd
   }
 
-  measure: total_cost_completed {
-    type: sum
-    filters: [order_items.iscomplete: "yes"]
-    sql: ${cost} ;;
-    value_format_name: usd
-  }
+  # measure: total_cost_completed {
+  #   type: sum
+  #   filters: [order_items.iscomplete: "yes"]
+  #   sql: ${cost} ;;
+  #   value_format_name: usd
+  # }
 
   set: detail {
     fields: [

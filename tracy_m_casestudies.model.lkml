@@ -15,10 +15,4 @@ explore: order_items {
 }
 explore: users {}
 
-explore: products {
-  join: order_items {
-    type: inner
-    sql_on: ${products.id} = ${order_items.product_id} ;;
-    relationship: one_to_one
-    }
-}
+explore: products {}
