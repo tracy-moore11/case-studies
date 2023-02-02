@@ -46,6 +46,11 @@ view: order_items {
     sql: ${TABLE}.inventory_item_id ;;
   }
 
+  dimension: iscomplete {
+    type: yesno
+    sql: ${status} = "-Cancelled" AND ${returned_date} ="-NULL" ;;
+  }
+
   dimension: order_id {
     type: number
     sql: ${TABLE}.order_id ;;
@@ -102,17 +107,30 @@ view: order_items {
   }
   # --measures--
 
-
-  measure: total_sale_price {
-    description: "Total sales from items sold"
-    type: sum
+  measure: average_sale_price {
+    description: "Average sale price of items sold"
+    type: average
     sql: ${sale_price} ;;
     value_format_name: usd
   }
 
-  measure: average_sale_price {
-    description: "Average sale price of items sold"
-    type: average
+  measure: cumulative_total_sales {
+    description: "Cumulative total sales from items sold (also known as a running total)"
+    type: running_total
+    sql: ${sale_price};;
+    value_format_name: usd
+  }
+
+  measure: total_gross_revenue {
+    description: "Total revenue from completed sales (cancelled and returned orders excluded)"
+    type: sum
+    sql: ${sale_price} ;;
+    filters: [iscomplete: "yes"]
+  }
+
+  measure: total_sale_price {
+    description: "Total sales from items sold"
+    type: sum
     sql: ${sale_price} ;;
     value_format_name: usd
   }
