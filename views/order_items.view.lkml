@@ -2,7 +2,7 @@ view: order_items {
   sql_table_name: `looker-partners.thelook.order_items`;;
   drill_fields: [id]
 
-  # --primary key--
+  # --primary key--##
 
   dimension: id {
     primary_key: yes
@@ -10,7 +10,7 @@ view: order_items {
     sql: ${TABLE}.id ;;
   }
 
-# --dimensions--
+# --dimensions--##
 
   dimension_group: created {
     type: time
@@ -95,17 +95,18 @@ view: order_items {
     sql: ${TABLE}.shipped_at ;;
   }
 
+  dimension: status {
+    type: string
+    sql: ${TABLE}.status ;;
+  }
+
   dimension: user_id {
     type: number
     # hidden: yes
     sql: ${TABLE}.user_id ;;
   }
 
-  dimension: status {
-    type: string
-    sql: ${TABLE}.status ;;
-  }
-  # --measures--
+  # --measures--##
 
   measure: average_sale_price {
     description: "Average sale price of items sold"
