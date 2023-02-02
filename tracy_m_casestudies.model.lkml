@@ -8,10 +8,6 @@ explore: order_items {
     sql_on: ${order_items.product_id} = ${products.id} ;;
     relationship: one_to_one
     }
-  # join: products_crossview {
-  #   relationship: one_to_one
-  # sql:  ;;
-  # }
 }
 explore: users {}
 

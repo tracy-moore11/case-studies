@@ -127,6 +127,19 @@ view: order_items {
     value_format_name: usd
   }
 
+  measure: count_users_with_returns {
+    type: count_distinct
+    sql: ${user_id} ;;
+    filters: [isreturned: "yes"]
+  }
+
+  measure: cumulative_total_sales {
+    description: "Cumulative total sales from items sold (also known as a running total)"
+    type: running_total
+    sql: ${sale_price};;
+    value_format_name: usd
+  }
+
   measure: num_complete_sales {
     type: count
     filters: [iscomplete: "yes"]
@@ -136,11 +149,10 @@ view: order_items {
     type: count
     filters: [isreturned: "yes"]
   }
-  measure: cumulative_total_sales {
-    description: "Cumulative total sales from items sold (also known as a running total)"
-    type: running_total
-    sql: ${sale_price};;
-    value_format_name: usd
+
+  measure: num_users {
+    type: count_distinct
+    sql: ${user_id} ;;
   }
 
   measure: total_gross_margin_amount {
