@@ -122,6 +122,13 @@ view: order_items {
     value_format_name: usd
   }
 
+  measure: total_gross_margin_amount {
+    type: sum
+    filters: [order_items.iscomplete: "yes"]
+    sql: ${order_items.sale_price}-${products.cost} ;;
+    value_format_name: usd
+  }
+
   measure: total_gross_revenue {
     description: "Total revenue from completed sales (cancelled and returned orders excluded)"
     type: sum

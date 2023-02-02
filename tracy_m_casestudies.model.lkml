@@ -6,7 +6,7 @@ explore: order_items {
   join: products {
     type: inner
     sql_on: ${order_items.product_id} = ${products.id} ;;
-    relationship: many_to_one
+    relationship: one_to_one
     }
   # join: products_crossview {
   #   relationship: one_to_one
@@ -19,6 +19,6 @@ explore: products {
   join: order_items {
     type: inner
     sql_on: ${products.id} = ${order_items.product_id} ;;
-    relationship: one_to_many
+    relationship: one_to_one
     }
 }

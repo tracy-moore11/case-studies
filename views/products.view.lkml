@@ -69,13 +69,6 @@ view: products {
     sql: ${cost} ;;
     value_format_name: usd
   }
-
-  measure: total_gross_margin_amount {
-    type: sum
-    filters: [order_items.iscomplete: "yes"]
-    sql: ${order_items.sale_price}-${cost} ;;
-    value_format_name: usd
-  }
   set: detail {
     fields: [
       id,
