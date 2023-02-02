@@ -103,12 +103,14 @@ view: order_items {
     description: "Total sales from items sold"
     type: sum
     sql: ${sale_price} ;;
+    value_format_name: usd
   }
 
   measure: average_sale_price {
     description: "Average sale price of items sold"
     type: average
     sql: ${sale_price} ;;
+    value_format_name: usd
   }
 
   # ----- Sets of fields for drilling ------
