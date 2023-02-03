@@ -127,12 +127,6 @@ view: order_items {
     value_format_name: usd
   }
 
-  measure: count_users_with_returns {
-    type: count_distinct
-    sql: ${user_id} ;;
-    filters: [isreturned: "yes"]
-  }
-
   measure: cumulative_total_sales {
     description: "Cumulative total sales from items sold (also known as a running total)"
     type: running_total
@@ -144,6 +138,12 @@ view: order_items {
     type: count_distinct
     sql: ${order_id} ;;
     filters: [iscomplete: "yes"]
+  }
+
+  measure: num_cust_with_returns {
+    type: count_distinct
+    sql: ${user_id} ;;
+    filters: [isreturned: "yes"]
   }
 
   measure: num_returned_items {
