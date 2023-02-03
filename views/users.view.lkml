@@ -101,4 +101,8 @@ view: users {
     type: sum
     sql: ${age} ;;
   }
+
+  measure: total_users {
+    type: count
+  }
 }

@@ -141,13 +141,19 @@ view: order_items {
   }
 
   measure: num_complete_sales {
-    type: count
+    type: count_distinct
+    sql: ${order_id} ;;
     filters: [iscomplete: "yes"]
   }
 
   measure: num_returned_items {
     type: count
     filters: [isreturned: "yes"]
+  }
+
+  measure: num_uncancelled_items {
+    type: count
+    filters: [status: "-Cancelled"]
   }
 
   measure: num_users {
