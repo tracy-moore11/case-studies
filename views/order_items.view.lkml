@@ -51,6 +51,11 @@ view: order_items {
     sql: ${status} != "Cancelled" AND ${returned_date} IS NULL ;;
   }
 
+  dimension: is_not_cancelled {
+    type: yesno
+    sql: ${status} != "Cancelled" ;;
+  }
+
   dimension: isreturned {
     type: yesno
     sql: ${returned_date} IS NOT NULL ;;
@@ -152,14 +157,9 @@ view: order_items {
     filters: [isreturned: "yes"]
   }
 
-  measure: num_returned_items {
-    type: count
-    filters: [isreturned: "yes"]
-  }
-
   measure: num_uncancelled_items {
     type: count
-    filters: [status: "-Cancelled"]
+    filters: [is_not_cancelled: "yes"]
   }
 
   measure: num_users {
@@ -186,6 +186,11 @@ view: order_items {
     sql: ${sale_price} ;;
     filters: [iscomplete: "yes"]
     value_format_name: usd
+  }
+
+  measure: total_returned_items {
+    type: count
+    filters: [isreturned: "yes"]
   }
 
   measure: total_sale_price {
