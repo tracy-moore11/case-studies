@@ -113,6 +113,12 @@ view: order_items {
 
   # --measures--##
 
+  measure: average_cost_sold_items {
+    type: average
+    sql: ${products.cost} ;;
+    value_format_name: usd
+  }
+
   measure: average_gross_margin_amount {
     type: average
     filters: [iscomplete: "yes"]
@@ -159,6 +165,12 @@ view: order_items {
   measure: num_users {
     type: count_distinct
     sql: ${user_id} ;;
+  }
+
+  measure: total_cost_sold_items {
+    type: sum
+    sql: ${products.cost} ;;
+    value_format_name: usd
   }
 
   measure: total_gross_margin_amount {
