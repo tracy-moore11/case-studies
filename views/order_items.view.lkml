@@ -188,6 +188,22 @@ view: order_items {
     value_format_name: usd
   }
 
+  measure: total_gross_revenue_female {
+    description: "Total revenue from completed sales (cancelled and returned orders excluded)"
+    type: sum
+    sql: ${sale_price} ;;
+    filters: [iscomplete: "yes",users.gender: "F"]
+    value_format_name: usd
+  }
+
+  measure: total_gross_revenue_male {
+    description: "Total revenue from completed sales (cancelled and returned orders excluded)"
+    type: sum
+    sql: ${sale_price} ;;
+    filters: [iscomplete: "yes",users.gender: "M"]
+    value_format_name: usd
+  }
+
   measure: total_returned_items {
     type: count
     filters: [isreturned: "yes"]
