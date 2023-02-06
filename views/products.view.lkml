@@ -13,6 +13,7 @@ view: products {
   dimension: brand {
     type: string
     sql: ${TABLE}.brand ;;
+    drill_fields: [department, name]
   }
 
   dimension: category {
@@ -52,7 +53,9 @@ view: products {
   }
 
   ##--measures--##
-
+  measure: num_products {
+    type: count
+  }
   set: detail {
     fields: [
       id,
