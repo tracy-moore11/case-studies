@@ -1,6 +1,6 @@
 connection: "looker_partner_demo"
 
-include: "/views/*.view.lkml"                # include all views in the views/ folder in this project
+include: "/views/*.view.lkml"
 
 explore: order_items {
   join: products {
@@ -16,7 +16,7 @@ explore: order_items {
   join: orders_crossview {
     relationship:  one_to_one
     sql:  ;;
-}
+  }
 }
 explore: users {}
 
