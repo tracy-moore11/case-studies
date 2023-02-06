@@ -183,6 +183,7 @@ view: order_items {
     filters: [iscomplete: "yes"]
     sql: ${order_items.sale_price}-${products.cost} ;;
     value_format_name: usd
+    drill_fields: [product_dd*]
   }
 
   measure: total_gross_revenue {
@@ -233,6 +234,10 @@ view: order_items {
     type: sum
     sql: ${sale_price} ;;
     value_format_name: usd
+  }
+
+  set: product_dd {
+    fields: [products.name,total_gross_margin_amount,total_sale_price,total_cost_sold_items]
   }
 
   # ----- Sets of fields for drilling ------

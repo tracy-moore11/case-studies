@@ -32,6 +32,7 @@ view: users {
     type: string
     map_layer_name: countries
     sql: ${TABLE}.country ;;
+    drill_fields: [state]
   }
 
   dimension_group: created {
