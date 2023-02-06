@@ -51,6 +51,11 @@ view: order_items {
     sql: ${status} != "Cancelled" AND ${returned_date} IS NULL ;;
   }
 
+  dimension: is_new_cust_at_sale {
+    type: yesno
+    sql: date_diff(${order_items.created_date},${users.created_date},day)<90 ;;
+  }
+
   dimension: is_not_cancelled {
     type: yesno
     sql: ${status} != "Cancelled" ;;
@@ -204,6 +209,20 @@ view: order_items {
     value_format_name: usd
   }
 
+  measure: total_gross_revenue_new_cust {
+    type: sum
+    filters: [is_new_cust_at_sale: "yes", iscomplete: "yes"]
+    sql: ${sale_price} ;;
+    value_format_name: usd
+  }
+
+  measure: total_gross_revenue_old_cust {
+    type: sum
+    filters: [is_new_cust_at_sale: "no", iscomplete: "yes"]
+    sql: ${sale_price} ;;
+    value_format_name: usd
+  }
+
   measure: total_returned_items {
     type: count
     filters: [isreturned: "yes"]
@@ -214,6 +233,10 @@ view: order_items {
     type: sum
     sql: ${sale_price} ;;
     value_format_name: usd
+  }
+
+  set: user_details {
+    fields: [users.gender, users.age_tier]
   }
 
   # ----- Sets of fields for drilling ------
