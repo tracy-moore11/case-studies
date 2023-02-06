@@ -235,10 +235,6 @@ view: order_items {
     value_format_name: usd
   }
 
-  set: user_details {
-    fields: [users.gender, users.age_tier]
-  }
-
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [

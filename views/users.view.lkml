@@ -96,6 +96,7 @@ view: users {
   dimension: traffic_source {
     type: string
     sql: ${TABLE}.traffic_source ;;
+    drill_fields: [user_details*]
   }
 
   ##--measures--##
@@ -111,5 +112,9 @@ view: users {
 
   measure: total_users {
     type: count
+  }
+
+  set: user_details {
+    fields: [gender, age_tier]
   }
 }
