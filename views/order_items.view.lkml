@@ -174,6 +174,7 @@ view: order_items {
 
   measure: total_cost_sold_items {
     type: sum
+    filters: [iscomplete: "yes"]
     sql: ${products.cost} ;;
     value_format_name: usd
   }
