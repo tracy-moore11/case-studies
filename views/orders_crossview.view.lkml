@@ -10,7 +10,7 @@ view: orders_crossview {
 
   measure: gross_margin_percentage {
     type: number
-    value_format_name: percent_2
+    value_format_name: percent_3
     sql: 1.0*${order_items.total_gross_margin_amount}
       /NULLIF(${order_items.total_gross_revenue}, 0) ;;
     view_label: "Order Items"

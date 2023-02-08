@@ -1,7 +1,7 @@
 connection: "looker_partner_demo"
 
 include: "/views/*.view.lkml"
-include: "/derived_tables/*.view.lkml"
+# include: "/derived_tables/*.view.lkml"
 
 explore: order_items {
   join: products {
@@ -22,5 +22,3 @@ explore: order_items {
 explore: users {}
 
 explore: products {}
-
-explore: brand_details {}

@@ -162,6 +162,11 @@ view: order_items {
     filters: [isreturned: "yes"]
   }
 
+  measure: num_total_orders {
+    type: count_distinct
+    sql: ${order_id} ;;
+  }
+
   measure: num_uncancelled_items {
     type: count
     filters: [is_not_cancelled: "yes"]
