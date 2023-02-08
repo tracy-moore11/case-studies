@@ -151,13 +151,13 @@ view: order_items {
   }
 
   measure: first_order {
-    type: min
-    sql: ${created_date} ;;
+    sql: min(${created_raw});;
+    type: date
   }
 
   measure: latest_order {
-    type: max
-    sql: ${created_date} ;;
+    sql: max(${created_raw});;
+    type: date
   }
 
   measure: num_complete_sales {
