@@ -150,6 +150,16 @@ view: order_items {
     value_format_name: usd
   }
 
+  measure: first_order {
+    type: min
+    sql: ${created_date} ;;
+  }
+
+  measure: latest_order {
+    type: max
+    sql: ${created_date} ;;
+  }
+
   measure: num_complete_sales {
     type: count_distinct
     sql: ${order_id} ;;
