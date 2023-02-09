@@ -18,9 +18,13 @@ explore: order_items {
     relationship:  one_to_one
     sql:  ;;
   }
+  join: cust_top_lvl_dtl {
+    type: inner
+    relationship: many_to_one
+    sql_on: ${order_items.user_id}=${cust_top_lvl_dtl.user_id} ;;
+
+  }
 }
 explore: users {}
 
 explore: products {}
-
-explore: cust_top_lvl_dtl {}
