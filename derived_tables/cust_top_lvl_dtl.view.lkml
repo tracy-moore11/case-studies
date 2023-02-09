@@ -2,6 +2,8 @@ view: cust_top_lvl_dtl {
   derived_table: {
     explore_source: order_items {
       column: user_id {}
+      column: first_order {}
+      column: latest_order {}
       column: num_total_orders {}
       column: total_gross_revenue {}
     }
@@ -23,6 +25,12 @@ view: cust_top_lvl_dtl {
     tiers: [0, 5, 20, 50, 100, 500, 1000]
     sql: ${total_gross_revenue} ;;
     style:  integer
+  }
+  dimension: first_order {
+    type: number
+  }
+  dimension: latest_order {
+    type: number
   }
   dimension: num_total_orders {
     hidden: yes
