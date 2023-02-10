@@ -63,12 +63,12 @@ view: order_items {
 
   dimension: isfirstorder {
     type: yesno
-    sql: ${cust_top_lvl_dtl.first_order}${order_items.created_date} ;;
+    sql: ${cust_top_lvl_dtl.first_order}=${order_items.created_date} ;;
   }
 
   dimension: islastorder {
     type: yesno
-    sql: ${cust_top_lvl_dtl.latest_order}${order_items.created_date} ;;
+    sql: ${cust_top_lvl_dtl.latest_order}=${order_items.created_date} ;;
   }
 
   dimension: isreturned {
