@@ -46,6 +46,11 @@ view: order_items {
     sql: ${TABLE}.inventory_item_id ;;
   }
 
+  dimension: hasrepeat {
+    type: yesno
+    sql: ${cust_top_lvl_dtl.num_total_orders}>1 ;;
+  }
+
   dimension: iscomplete {
     type: yesno
     sql: ${status} != "Cancelled" AND ${returned_date} IS NULL ;;
