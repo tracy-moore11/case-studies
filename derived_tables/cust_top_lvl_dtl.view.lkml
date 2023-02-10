@@ -25,6 +25,7 @@ view: cust_top_lvl_dtl {
     tiers: [0, 5, 20, 50, 100, 500, 1000]
     sql: ${total_gross_revenue} ;;
     style:  integer
+    value_format_name: usd
   }
   dimension: first_order {
     type: date
