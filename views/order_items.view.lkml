@@ -76,6 +76,11 @@ view: order_items {
     sql: ${cust_top_lvl_dtl.latest_order}=${order_items.created_date} ;;
   }
 
+  dimension: isrepeatorder {
+    type: yesno
+    sql: ${cust_top_lvl_dtl.first_order}<>${order_items.created_date} ;;
+  }
+
   dimension: isreturned {
     type: yesno
     sql: ${returned_date} IS NOT NULL ;;
@@ -185,6 +190,10 @@ view: order_items {
     type: count_distinct
     sql: ${user_id} ;;
     filters: [isreturned: "yes"]
+  }
+
+  measure: num_items {
+    type: count
   }
 
   measure: num_total_orders {
