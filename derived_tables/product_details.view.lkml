@@ -71,46 +71,46 @@ select oi.user_id, case when first_order=last_order then false else true end as 
 
   measure: percent_ot_category_purchase {
     type: number
-    label: "One Time Purchase Rate"
+    label: "Category One Time Purchase Rate"
     sql: ${total_ot_category}/${count} ;;
     value_format_name: percent_2
   }
 
   measure: percent_rpt_brand_purchase {
     type: number
-    label: "Repeat Purchase Rate"
+    label: "Brand Repeat Purchase Rate"
     sql: ${total_rpt_brand}/${count} ;;
     value_format_name: percent_2
   }
 
   measure: percent_rpt_category_purchase {
     type: number
-    label: "Repeat Purchase Rate"
+    label: "Category Repeat Purchase Rate"
     sql: ${total_rpt_category}/${count} ;;
     value_format_name: percent_2
   }
 
   measure: total_ot_brand {
     type: count
-    label: "One Time Purchases"
+    label: "Brand One Time Purchases"
     filters: [brand_purchase_rank: "1",hasrepeat: "no"]
   }
 
   measure: total_ot_category {
     type: count
-    label: "One Time Purchases"
+    label: " Category One Time Purchases"
     filters: [category_purchase_rank: "1",hasrepeat: "no"]
   }
 
   measure: total_rpt_brand {
     type: count
-    label: "Repeat Purchases"
+    label: "Brand Repeat Purchases"
     filters: [brand_purchase_rank: ">1"]
   }
 
   measure: total_rpt_category {
     type: count
-    label: "Repeat Purchases"
+    label: "Category Repeat Purchases"
     filters: [category_purchase_rank: ">1"]
   }
 
