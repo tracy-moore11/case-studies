@@ -13,7 +13,7 @@ explore: order_items {
   join: users {
     type: inner
     sql_on: ${order_items.user_id} = ${users.id} ;;
-    relationship: one_to_many
+    relationship:many_to_one
   }
   join: orders_crossview {
     relationship:  one_to_one
