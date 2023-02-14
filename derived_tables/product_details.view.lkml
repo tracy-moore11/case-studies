@@ -1,10 +1,17 @@
 view: product_details {
   derived_table: {
-    sql: select user_id, p.name, p.brand, p.category, cast(oi.created_at as date) as order_date,
-        rank() over (partition by user_id, brand order by cast(oi.created_at as date)) as brand_purchase_rank,
-        rank() over (partition by user_id, category order by cast(oi.created_at as date)) as category_purchase_rank
+    sql: with order_dates as (
+select user_id, min(created_at) as first_order, max(created_at) as last_order
+from order_items
+group by 1
+)
+
+select oi.user_id, case when first_order=last_order then false else true end as isrepeat, p.name, p.brand, p.category, cast(oi.created_at as date) as order_date,
+        rank() over (partition by oi.user_id, brand order by cast(oi.created_at as date)) as brand_purchase_rank,
+        rank() over (partition by oi.user_id, category order by cast(oi.created_at as date)) as category_purchase_rank
       from order_items oi
         join products p on oi.product_id=p.id
+        join order_dates od on oi.user_id=od.user_id
       where returned_at is null and status<>'Cancelled'
        ;;
   }
@@ -20,6 +27,10 @@ view: product_details {
     sql: ${TABLE}.user_id ;;
   }
 
+  dimension: hasrepeat {
+    type: yesno
+    sql: ${TABLE}.isrepeat = true ;;
+  }
   dimension: name {
     type: string
     sql: ${TABLE}.name ;;
@@ -51,29 +62,55 @@ view: product_details {
     sql: ${TABLE}.category_purchase_rank ;;
   }
 
+  measure: percent_ot_brand_purchase {
+    type: number
+    label: "Brand One Time Purchase Rate"
+    sql: ${total_ot_brand}/${count} ;;
+    value_format_name: percent_2
+  }
+
+  measure: percent_ot_category_purchase {
+    type: number
+    label: "One Time Purchase Rate"
+    sql: ${total_ot_category}/${count} ;;
+    value_format_name: percent_2
+  }
+
   measure: percent_rpt_brand_purchase {
     type: number
-    label: "Brand Repeat Purchase Rate"
+    label: "Repeat Purchase Rate"
     sql: ${total_rpt_brand}/${count} ;;
     value_format_name: percent_2
   }
 
   measure: percent_rpt_category_purchase {
     type: number
-    label: "Category Repeat Purchase Rate"
+    label: "Repeat Purchase Rate"
     sql: ${total_rpt_category}/${count} ;;
     value_format_name: percent_2
   }
 
+  measure: total_ot_brand {
+    type: count
+    label: "One Time Purchases"
+    filters: [brand_purchase_rank: "1",hasrepeat: "no"]
+  }
+
+  measure: total_ot_category {
+    type: count
+    label: "One Time Purchases"
+    filters: [category_purchase_rank: "1",hasrepeat: "no"]
+  }
+
   measure: total_rpt_brand {
     type: count
-    label: "Brand Repeat Purchases"
+    label: "Repeat Purchases"
     filters: [brand_purchase_rank: ">1"]
   }
 
   measure: total_rpt_category {
     type: count
-    label: "Category Repeat Purchases"
+    label: "Repeat Purchases"
     filters: [category_purchase_rank: ">1"]
   }
 
