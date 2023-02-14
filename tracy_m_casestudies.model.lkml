@@ -28,3 +28,5 @@ explore: order_items {
 explore: users {}
 
 explore: products {}
+
+explore: product_details {}
