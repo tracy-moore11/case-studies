@@ -166,13 +166,18 @@ view: order_items {
   measure: cumulative_total_sales {
     description: "Cumulative total sales from items sold (also known as a running total)"
     type: running_total
-    sql: ${sale_price};;
+    sql: ${total_gross_revenue};;
     value_format_name: usd
   }
 
   measure: first_order {
     sql: min(${created_raw});;
     type: date
+  }
+
+  measure: gross_revenue_percent_of_total {
+    type: percent_of_total
+    sql: ${total_gross_revenue} ;;
   }
 
   measure: latest_order {

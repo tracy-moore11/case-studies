@@ -54,6 +54,13 @@ view: users {
     sql: date_diff(current_date,${created_date},day) ;;
   }
 
+  dimension: days_since_signup_grp {
+    type: tier
+    sql: ${days_since_signup} ;;
+    tiers: [30,90,180,365,730]
+    style: integer
+  }
+
   dimension: email {
     type: string
     sql: ${TABLE}.email ;;
