@@ -47,6 +47,7 @@ view: users {
       year
     ]
     sql: ${TABLE}.created_at ;;
+    convert_tz: no
   }
 
   dimension: days_since_signup {

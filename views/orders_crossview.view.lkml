@@ -1,13 +1,5 @@
 view: orders_crossview {
 
-  measure: average_spend_per_customer {
-    type: number
-    value_format_name: usd
-    sql: 1.0*${order_items.total_sale_price}
-      /NULLIF(${order_items.num_users}, 0) ;;
-    view_label: "Order Items"
-  }
-
   measure: gross_margin_percentage {
     type: number
     value_format_name: percent_3

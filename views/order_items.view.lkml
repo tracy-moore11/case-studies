@@ -23,6 +23,7 @@ view: order_items {
       quarter,
       year
     ]
+    convert_tz: no
     sql: ${TABLE}.created_at ;;
   }
 
@@ -42,7 +43,7 @@ view: order_items {
 
   dimension: inventory_item_id {
     type: number
-    # hidden: yes
+    hidden: yes
     sql: ${TABLE}.inventory_item_id ;;
   }
 
@@ -76,11 +77,6 @@ view: order_items {
     sql: ${cust_top_lvl_dtl.latest_order}=${order_items.created_date} ;;
   }
 
-  dimension: isrepeatorder {
-    type: yesno
-    sql: ${cust_top_lvl_dtl.first_order}<>${order_items.created_date} ;;
-  }
-
   dimension: isreturned {
     type: yesno
     sql: ${returned_date} IS NOT NULL ;;
@@ -88,12 +84,13 @@ view: order_items {
 
   dimension: order_id {
     type: number
+    hidden: yes
     sql: ${TABLE}.order_id ;;
   }
 
   dimension: product_id {
     type: number
-    # hidden: yes
+    hidden: yes
     sql: ${TABLE}.product_id ;;
   }
 
@@ -163,6 +160,14 @@ view: order_items {
     value_format_name: usd
   }
 
+  measure: average_spend_per_customer {
+    type: number
+    value_format_name: usd
+    sql: 1.0*${total_sale_price}
+      /NULLIF(${num_users}, 0) ;;
+    view_label: "Order Items"
+  }
+
   measure: cumulative_total_sales {
     description: "Cumulative total sales from items sold (also known as a running total)"
     type: running_total
@@ -175,10 +180,10 @@ view: order_items {
     type: date
   }
 
-  measure: gross_revenue_percent_of_total {
-    type: percent_of_total
-    sql: ${total_gross_revenue} ;;
-  }
+  # measure: gross_revenue_percent_of_total {
+  #   type: percent_of_total
+  #   sql: ${total_gross_revenue} ;;
+  # }
 
   measure: latest_order {
     sql: max(${created_raw});;
@@ -236,36 +241,6 @@ view: order_items {
     type: sum
     sql: ${sale_price} ;;
     filters: [iscomplete: "yes"]
-    value_format_name: usd
-  }
-
-  measure: total_gross_revenue_female {
-    description: "Total revenue from completed sales (cancelled and returned orders excluded)"
-    type: sum
-    sql: ${sale_price} ;;
-    filters: [iscomplete: "yes",users.gender: "F"]
-    value_format_name: usd
-  }
-
-  measure: total_gross_revenue_male {
-    description: "Total revenue from completed sales (cancelled and returned orders excluded)"
-    type: sum
-    sql: ${sale_price} ;;
-    filters: [iscomplete: "yes",users.gender: "M"]
-    value_format_name: usd
-  }
-
-  measure: total_gross_revenue_new_cust {
-    type: sum
-    filters: [is_new_cust_at_sale: "yes", iscomplete: "yes"]
-    sql: ${sale_price} ;;
-    value_format_name: usd
-  }
-
-  measure: total_gross_revenue_old_cust {
-    type: sum
-    filters: [is_new_cust_at_sale: "no", iscomplete: "yes"]
-    sql: ${sale_price} ;;
     value_format_name: usd
   }
 
