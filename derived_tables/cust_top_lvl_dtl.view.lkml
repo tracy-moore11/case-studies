@@ -2,8 +2,6 @@ view: cust_top_lvl_dtl {
   derived_table: {
     explore_source: order_items {
       column: user_id {}
-      column: first_order {}
-      column: latest_order {}
       column: num_total_orders {}
       column: total_gross_revenue {}
     }
@@ -27,22 +25,6 @@ view: cust_top_lvl_dtl {
     style:  integer
     value_format_name: usd
   }
-  dimension: first_order {
-    type: date
-    hidden: yes
-  }
-  dimension: days_since_last_order {
-    type: number
-    sql: DATE_DIFF(CURRENT_DATE,${latest_order},DAY) ;;
-  }
-  dimension: isactive {
-    type: yesno
-    sql: DATE_DIFF(CURRENT_DATE,${latest_order},DAY) <= 90 ;;
-  }
-  dimension: latest_order {
-    type: date
-    hidden: yes
-  }
   dimension: num_total_orders {
     # hidden: yes
     type: number
@@ -55,11 +37,7 @@ view: cust_top_lvl_dtl {
   }
 
   ##--Measures--##
-  measure: average_days_since_lastest_order {
-    type: average
-    sql: ${days_since_last_order} ;;
-    value_format_name: decimal_2
-  }
+
   measure: average_lifetime_orders {
     type: average
     sql: ${num_total_orders} ;;

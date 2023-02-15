@@ -66,16 +66,6 @@ view: order_items {
     sql: ${status} != "Cancelled" ;;
   }
 
-  dimension: isfirstorder {
-    type: yesno
-    sql: ${cust_top_lvl_dtl.first_order}=${order_items.created_date} ;;
-  }
-
-  dimension: islastorder {
-    type: yesno
-    sql: ${cust_top_lvl_dtl.latest_order}=${order_items.created_date} ;;
-  }
-
   dimension: isreturned {
     type: yesno
     sql: ${returned_date} IS NOT NULL ;;
