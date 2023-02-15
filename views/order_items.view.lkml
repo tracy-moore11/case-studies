@@ -180,6 +180,22 @@ view: order_items {
     type: date
   }
 
+  measure: gross_margin_percentage {
+    type: number
+    value_format_name: percent_3
+    sql: 1.0*${total_gross_margin_amount}
+      /NULLIF(${total_gross_revenue}, 0) ;;
+    view_label: "Order Items"
+  }
+
+  measure: item_return_rate {
+    type: number
+    value_format_name: percent_2
+    sql: 1.0*${total_returned_items}
+      /NULLIF(${num_uncancelled_items}, 0) ;;
+    view_label: "Order Items"
+  }
+
   # measure: gross_revenue_percent_of_total {
   #   type: percent_of_total
   #   sql: ${total_gross_revenue} ;;
