@@ -23,7 +23,6 @@ view: order_items {
       quarter,
       year
     ]
-    convert_tz: no
     sql: ${TABLE}.created_at ;;
   }
 
@@ -176,7 +175,7 @@ view: order_items {
   }
 
   measure: first_order {
-    sql: min(${created_raw});;
+    sql: min(${created_date});;
     type: date
   }
 
@@ -202,7 +201,7 @@ view: order_items {
   # }
 
   measure: latest_order {
-    sql: max(${created_raw});;
+    sql: max(${created_date});;
     type: date
   }
 
@@ -235,6 +234,14 @@ view: order_items {
   measure: num_users {
     type: count_distinct
     sql: ${user_id} ;;
+  }
+
+  measure: percentage_customers_with_returns {
+    type: number
+    value_format_name: percent_2
+    sql: 1.0*${num_cust_with_returns}
+      /NULLIF(${num_users}, 0) ;;
+    view_label: "Order Items"
   }
 
   measure: total_cost_sold_items {
