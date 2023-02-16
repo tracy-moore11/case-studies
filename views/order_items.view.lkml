@@ -165,8 +165,8 @@ view: order_items {
   }
 
   measure: first_order {
-    sql: min(${created_date});;
-    type: date
+    sql: min(${created_raw});;
+    type: date_time
   }
 
   measure: gross_margin_percentage {
@@ -191,8 +191,8 @@ view: order_items {
   # }
 
   measure: latest_order {
-    sql: max(${created_date});;
-    type: date
+    sql: max(${created_raw});;
+    type: date_time
   }
 
   measure: num_complete_sales {

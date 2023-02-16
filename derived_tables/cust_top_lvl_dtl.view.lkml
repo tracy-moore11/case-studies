@@ -3,6 +3,8 @@ view: cust_top_lvl_dtl {
     explore_source: order_items {
       column: user_id {}
       column: num_total_orders {}
+      column: first_order {}
+      column: latest_order {}
       column: total_gross_revenue {}
     }
   }
@@ -24,6 +26,13 @@ view: cust_top_lvl_dtl {
     sql: ${total_gross_revenue} ;;
     style:  integer
     value_format_name: usd
+  }
+
+  dimension: first_order {
+    type: date_time
+  }
+  dimension: last_order {
+    type: date_time
   }
   dimension: num_total_orders {
     # hidden: yes
