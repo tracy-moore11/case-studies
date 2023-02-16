@@ -73,7 +73,6 @@ view: order_items {
 
   dimension: order_id {
     type: number
-    hidden: yes
     sql: ${TABLE}.order_id ;;
   }
 

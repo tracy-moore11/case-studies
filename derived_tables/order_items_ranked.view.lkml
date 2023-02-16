@@ -6,10 +6,10 @@ view: order_items_ranked {
     where status<>'Cancelled' and returned_at is null
       group by 1,2
       )
+      select * from (
       select order_id, order_start_date, order_end_date,
-        row_number() over (partition by user_id order by order_start_date) as first_rn,
-        row_number() over (partition by user_id order by order_end_date desc) as last_rn
-      from order_dates
+        row_number() over (partition by user_id order by order_start_date) as first_rn
+      from order_dates) x where first_rn=1
        ;;
   }
 
@@ -45,10 +45,6 @@ view: order_items_ranked {
     type: yesno
     sql: ${first_rn}=1 ;;
   }
-  dimension: islastorder {
-    type: yesno
-    sql: ${last_rn}=1 ;;
-  }
 
   dimension: last_rn {
     type: number
@@ -61,8 +57,7 @@ view: order_items_ranked {
       order_id,
       order_start_date_time,
       order_end_date_time,
-      first_rn,
-      last_rn
+      first_rn
     ]
   }
 }

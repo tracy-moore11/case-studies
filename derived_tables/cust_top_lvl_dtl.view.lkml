@@ -3,6 +3,8 @@ view: cust_top_lvl_dtl {
         explore_source: order_items {
           column: user_id {}
           column: num_total_orders {}
+          column: first_order {}
+          column: latest_order {}
           column: total_gross_revenue {}
           filters: {
             field: order_items.iscomplete
@@ -29,6 +31,20 @@ view: cust_top_lvl_dtl {
     style:  integer
     value_format_name: usd
   }
+
+  dimension: customer_lifetime_months {
+    type: number
+    sql: date_diff(${latest_order},${first_order},month) ;;
+  }
+
+  dimension: first_order {
+    # hidden: yes
+    type: date
+  }
+  dimension: latest_order {
+    # hidden: yes
+    type: date
+  }
   dimension: num_total_orders {
     # hidden: yes
     type: number
@@ -41,6 +57,11 @@ view: cust_top_lvl_dtl {
   }
 
   ##--Measures--##
+
+  measure: average_lifetime_months {
+    type: average
+    sql: ${customer_lifetime_months} ;;
+  }
 
   measure: average_lifetime_orders {
     type: average
