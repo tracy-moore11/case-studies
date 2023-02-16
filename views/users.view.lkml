@@ -50,6 +50,18 @@ view: users {
     convert_tz: no
   }
 
+  dimension: created_last_month {
+    type: yesno
+    sql: ${created_date}>=date_trunc(date_sub(current_date(), interval 1 month),month)
+      and ${created_date}<date_trunc(current_date(),month);;
+  }
+
+  dimension: created_last_year {
+    type: yesno
+    sql: ${created_date}>=date_trunc(date_sub(current_date(), interval 1 year),year)
+      and ${created_date}<date_trunc(current_date(),year);;
+  }
+
   dimension: days_since_signup {
     type: number
     sql: date_diff(current_date,${created_date},day) ;;

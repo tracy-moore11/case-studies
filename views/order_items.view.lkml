@@ -58,7 +58,7 @@ view: order_items {
 
   dimension: is_new_cust_at_sale {
     type: yesno
-    sql: date_diff(${order_items.created_date},${users.created_date},day)<90 ;;
+    sql: ${order_days_since_signup}<=90 ;;
   }
 
   dimension: is_not_cancelled {
@@ -75,6 +75,18 @@ view: order_items {
     type: number
     hidden: yes
     sql: ${TABLE}.order_id ;;
+  }
+
+  dimension: order_days_since_signup {
+    type: number
+    sql: date_diff(${order_items.created_date},${users.created_date},day) ;;
+  }
+
+  dimension: order_days_since_signup_grp {
+    type: tier
+    sql: ${order_days_since_signup} ;;
+    tiers: [30, 60, 90,180,365,730]
+    style: integer
   }
 
   dimension: product_id {

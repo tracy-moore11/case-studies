@@ -1,13 +1,15 @@
 view: cust_top_lvl_dtl {
-  derived_table: {
-    explore_source: order_items {
-      column: user_id {}
-      column: num_total_orders {}
-      column: first_order {}
-      column: latest_order {}
-      column: total_gross_revenue {}
-    }
-  }
+      derived_table: {
+        explore_source: order_items {
+          column: user_id {}
+          column: num_total_orders {}
+          column: total_gross_revenue {}
+          filters: {
+            field: order_items.iscomplete
+            value: "Yes"
+          }
+        }
+      }
 
   ##--Dimensions--##
   dimension: user_id {
@@ -27,13 +29,6 @@ view: cust_top_lvl_dtl {
     style:  integer
     value_format_name: usd
   }
-
-  dimension: first_order {
-    type: date_time
-  }
-  dimension: last_order {
-    type: date_time
-  }
   dimension: num_total_orders {
     # hidden: yes
     type: number
@@ -52,11 +47,13 @@ view: cust_top_lvl_dtl {
     sql: ${num_total_orders} ;;
     value_format_name: decimal_2
   }
+
   measure: average_lifetime_revenue {
     type: average
     sql: ${total_gross_revenue} ;;
     value_format_name: usd
   }
+
   measure:  total_lifetime_orders{
     type:sum
     sql: ${num_total_orders} ;;
